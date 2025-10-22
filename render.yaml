@@ -3,11 +3,24 @@ services:
     name: todo-backend
     env: docker
     plan: free
+    region: frankfurt
+    repo: https://github.com/kiirecodes/todo-go
+    rootDir: backend
     dockerfilePath: backend/Dockerfile
-    autoDeploy: true
-  - type: web
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: PORT
+        value: 8080
+      - key: ALLOWED_ORIGINS
+        value: "*"
+
+  - type: static_site
     name: todo-frontend
     env: static
     plan: free
+    region: frankfurt
+    repo: https://github.com/kiirecodes/todo_gin_react_full
+    rootDir: frontend
     buildCommand: npm install && npm run build
-    publishPath: frontend/build
+    staticPublishPath: build
