@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: todo-backend
+    env: docker
+    plan: free
+    dockerfilePath: backend/Dockerfile
+    autoDeploy: true
+  - type: web
+    name: todo-frontend
+    env: static
+    plan: free
+    buildCommand: npm install && npm run build
+    publishPath: frontend/build
