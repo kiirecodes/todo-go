@@ -4,7 +4,6 @@ services:
     env: docker
     plan: free
     region: frankfurt
-    repo: https://github.com/kiirecodes/todo-go
     rootDir: backend
     dockerfilePath: backend/Dockerfile
     envVars:
@@ -15,12 +14,14 @@ services:
       - key: ALLOWED_ORIGINS
         value: "*"
 
-  - type: static_site
+  - type: web
     name: todo-frontend
-    env: static
+    env: node
     plan: free
     region: frankfurt
-    repo: https://github.com/kiirecodes/todo_gin_react_full
     rootDir: frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: build
+    startCommand: npx serve -s build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://todo-backend.onrender.com
